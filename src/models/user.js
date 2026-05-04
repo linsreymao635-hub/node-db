@@ -1,45 +1,40 @@
-import db from "../config/db.js";
+import { db } from "../config/db.js";
+import { BaseModel } from "./BaseModel.js";
 
-class User {
-    constructor(id, name) {
-        this.id = id;
-        this.name = name;
-    }
+class User extends BaseModel {
 
-    static async getAll() {
-        const [rows] = await db.query("SELECT * FROM users");
+    async get() {
+        const [rows] = await db.execute("SELECT * FROM users");
         return rows;
     }
 
-    static async getById(id) {
-        const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
-        return rows[0] || null;
+    async create(name) {
+        const [result] = await db.execute(
+            "INSERT INTO users (name) VALUES (?)",
+            [name]
+        );
+        return result.insertId;
     }
 
-    static async create(name) {
-        const [result] = await db.query(
-          "INSERT INTO users (name) VALUES (?)",
-          [name]
+    async update(id, name) {
+        const [result] = await db.execute(
+            "UPDATE users SET name = ? WHERE id = ?",
+            [name, id]
         );
-        return { id: result.insertId, name };
+        return result.affectedRows;
     }
 
-    static async update(id, name) {
-        const [result] = await db.query(
-          "UPDATE users SET name = ? WHERE id = ?",
-          [name, id]
+    async delete(id) {
+        const [result] = await db.execute(
+            "DELETE FROM users WHERE id = ?",
+            [id]
         );
-        if (result.affectedRows === 0) return null;
-        return { id, name };
+        return result.affectedRows;
     }
 
-    static async delete(id) {
-        const [result] = await db.query(
-          "DELETE FROM users WHERE id = ?",
-          [id]
-        );
-        return result.affectedRows > 0;
+    searchUser(keyword) {
+        console.log("Search Users:", keyword);
     }
 }
 
-export default User;
+export default new User();

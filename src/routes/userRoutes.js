@@ -9,4 +9,11 @@ router.get("/:id", UserController.getUserById);
 router.put("/:id", UserController.updateUser);
 router.delete("/:id", UserController.deleteUser);
 
+
+router.get("/", ProductController.getUsers);
+router.post("/", ProductController.createUser);
+router.get("/:id", ProductController.getUserById);
+router.put("/:id", ProductController.updateUser);
+router.delete("/:id", ProductController.deleteUser);
+
 export default router;
