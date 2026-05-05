@@ -1,5 +1,6 @@
 import express from "express";
-import userRoutes from "./routes/UserRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import "./config/db.js";
 
 const app = express();
 
@@ -16,3 +17,7 @@ app.use((req, res) => {
 });
 
 export default app;
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000')
+});
