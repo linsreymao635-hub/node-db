@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class BaseModel {
     static async get(id) {
         throw new Error('Method "get" must be implemented by subclass');
@@ -21,3 +22,22 @@ class BaseModel {
 }
 
 export default BaseModel;
+=======
+export class BaseModel {
+  get() {
+    throw new Error("Method not implemented");
+  }
+
+  create() {
+    throw new Error("Method not implemented");
+  }
+
+  update() {
+    throw new Error("Method not implemented");
+  }
+
+  delete() {
+    throw new Error("Method not implemented");
+  }
+}
+>>>>>>> bcd69119f11b4adb561e4bcce16252be7b8e0daa

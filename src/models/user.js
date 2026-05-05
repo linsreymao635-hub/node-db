@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import db from "../config/db.js";
 import BaseModel from "./BaseModel.js";
 
@@ -27,14 +28,44 @@ class User extends BaseModel {
         );
         if (result.affectedRows === 0) return null;
         return { id, name: data.name };
+=======
+import { db } from "../config/db.js";
+import { BaseModel } from "./BaseModel.js";
+
+class User extends BaseModel {
+
+    async get() {
+        const [rows] = await db.execute("SELECT * FROM users");
+        return rows;
     }
 
-    static async delete(id) {
-        const [result] = await db.query(
-          "DELETE FROM users WHERE id = ?",
-          [id]
+    async create(name) {
+        const [result] = await db.execute(
+            "INSERT INTO users (name) VALUES (?)",
+            [name]
         );
-        return result.affectedRows > 0;
+        return result.insertId;
+    }
+
+    async update(id, name) {
+        const [result] = await db.execute(
+            "UPDATE users SET name = ? WHERE id = ?",
+            [name, id]
+        );
+        return result.affectedRows;
+    }
+
+    async delete(id) {
+        const [result] = await db.execute(
+            "DELETE FROM users WHERE id = ?",
+            [id]
+        );
+        return result.affectedRows;
+>>>>>>> bcd69119f11b4adb561e4bcce16252be7b8e0daa
+    }
+
+    searchUser(keyword) {
+        console.log("Search Users:", keyword);
     }
 
     static async find(query = {}) {
@@ -43,4 +74,4 @@ class User extends BaseModel {
     }
 }
 
-export default User;
+export default new User();
